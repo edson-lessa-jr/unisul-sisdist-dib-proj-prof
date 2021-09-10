@@ -1,15 +1,30 @@
 package br.unisul.proj.prof.projprof.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "TB_PROFESSOR")
 public class Professor {
     private static final DateTimeFormatter FORMATAR_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
+    @Column(nullable = false)
     private String nome;
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+
+    @ElementCollection
+    @CollectionTable(name = "TB_ESPECIALIDADES_PROFESSOR",
+    joinColumns = @JoinColumn(name = "professor_id"),
+    uniqueConstraints =
+        @UniqueConstraint(columnNames = {"professor_id","especialidade_nome"}))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "especialidade_nome")
     private List<Especialidade> especialidade=new ArrayList<>();
 
 
