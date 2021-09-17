@@ -21,6 +21,12 @@ public class ProfessorController {
         ProfessorDTO dto = new ProfessorDTO(professorRepository.getById(id));
         return dto;
     }
+        @GetMapping("/info/{id}")
+    public DadosBasicoProfessorDTO localicarDadosProfessor(@PathVariable(name = "id") Long id){
+        DadosBasicoProfessorDTO dto = new DadosBasicoProfessorDTO(professorRepository.getById(id));
+            System.out.println(dto);
+        return dto;
+    }
 
     @GetMapping("/nome/{nome}")
     public DadosBasicoProfessorDTO localizarPorNome(@PathVariable(name = "nome")String nome){
